@@ -4,6 +4,7 @@ html, body {
         padding:0.4em;
         margin:auto;
         max-width:42em;
+        min-width:12em;
         background:#fefefe;
   }
 body {
