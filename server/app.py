@@ -11,31 +11,40 @@ gi = pygeoip.GeoIP('GeoLiteCity.dat')
 app = Flask(__name__)
 
 display = ArduinoDisplay()
+display.clear()
+display.write("Initializing")
+time.sleep(1)
+display.clear()
+
+def locate_lat_lng(ip):
+    geoinfo = gi.record_by_addr(ip)
+    lat = geoinfo['latitude']
+    lng = geoinfo['longitude']
+    lat = decimalDegrees2DMS(lat, "Latitude")
+    lng = decimalDegrees2DMS(lng, "Longitude")
+    return lat, lng
 
 @app.route("/connect")
 def connect():
-    return "Hello World!"
+    display.clear()
+    display.write("Chrome connected")
+    return "OK"
 
 @app.route("/locate", methods=['POST'])
 def locate():
     o = urlparse(request.form["url"])
     try:
-        res = socket.gethostbyname(o.netloc)
         display.clear()
-        display.write("Locating..")
-        display.newline()
+        display.write("Locating...")
+        display.second_row()
         display.write(o.netloc)
         time.sleep(1.5)
-        display.clear()
-        geoinfo = gi.record_by_addr(res)
-        lat = geoinfo['latitude']
-        lng = geoinfo['longitude']
-        lat = decimalDegrees2DMS(lat, "Latitude")
-        lng = decimalDegrees2DMS(lng, "Longitude")
-        display.write(lat)
-        display.newline()
-        display.write(lng)
-        return jsonify(netloc=o.netloc, nslookup=res, lat=lat, lng=lng)
+        ip = socket.gethostbyname(o.netloc)
+        lat, lng = locate_lat_lng(ip)
+        display.write("Lat: " + lat)
+        display.second_row()
+        display.write("Lng: " + lng)
+        return jsonify(netloc=o.netloc, nslookup=ip, lat=lat, lng=lng)
     except Exception as e:
         print e
         abort(500)

@@ -42,10 +42,32 @@
 LiquidCrystal lcd(12, 11, 10, 5, 4, 3, 2);
 int backLight = 13;
 
-byte armsUp[8] = {
+byte degree[8] = {
   0b01000,
   0b10100,
   0b01000,
+  0b00000,
+  0b00000,
+  0b00000,
+  0b00000,
+  0b00000
+};
+
+byte minute[8] = {
+  0b01000,
+  0b01000,
+  0b01000,
+  0b00000,
+  0b00000,
+  0b00000,
+  0b00000,
+  0b00000
+};
+
+byte second[8] = {
+  0b01010,
+  0b01010,
+  0b01010,
   0b00000,
   0b00000,
   0b00000,
@@ -57,14 +79,15 @@ int incoming = 0;   // for incoming serial data
 
 void setup() {
   // create a new character
-  lcd.createChar(1, armsUp); 
+  lcd.createChar(1, degree); 
+  lcd.createChar(2, minute); 
+  lcd.createChar(3, second); 
   // set up the LCD's number of columns and rows: 
   lcd.begin(16, 2);
   // initialize the serial communications:
   Serial.begin(9600);
   pinMode(backLight, OUTPUT);
   digitalWrite(backLight, HIGH); // turn backlight on. Replace 'HIGH' with 'LOW' to turn it off.
-  lcd.write(1);
 }
 
 void loop()
@@ -79,8 +102,30 @@ void loop()
     while (Serial.available() > 0) {
       // display each character to the LCD
       incoming = Serial.read();
-      lcd.write("asd");
+      switch (incoming) {
+      case 34: // "
+        lcd.write(3);
+        break;
+      case 39: // '
+        lcd.write(2);
+        break;
+      case 42: // *
+        lcd.write(1);
+        break;
+      case 17:
+        lcd.setCursor(0, 1);
+        break;
+      case 18:
+        lcd.home();
+        break;
+      case 24:
+        lcd.clear();
+        break;
+      default: 
+        lcd.write(char(incoming));
+      }
     }
   }
 }
+
 

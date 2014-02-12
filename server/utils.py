@@ -31,8 +31,7 @@ def decimalDegrees2DMS(value,type):
             direction = "N"
         else:
             direction = ""
-    notation = str(degrees) + "*" + str(minutes) + "'" +\
-               str(subseconds)[0:2] + "''" + direction
+    notation = "%3s*%02d'%02d%s\"" % (abs(degrees), minutes, subseconds, direction)
     return notation
 
 

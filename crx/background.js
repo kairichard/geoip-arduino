@@ -17,6 +17,8 @@ function init(){
 }
 
 function handle(tab){
+  if(tab.url == "newtab") return
+  if(tab.url == "extensions") return
   jQuery.post("http://localhost:9000/locate", {url: tab.url}, function(data, status, xhr){
     response = data;
   });

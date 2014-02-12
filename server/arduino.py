@@ -8,8 +8,11 @@ class ArduinoDisplay(object):
     def clear(self):
         self.serial.write(chr(0x18))
 
-    def newline(self):
-        self.serial.write(chr(0xA))
+    def second_row(self):
+        self.serial.write(chr(0x11))
+
+    def first_row(self):
+        self.serial.write(chr(0x12))
 
     def write(self, msg):
         map(self.serial.write,list(str(msg)))

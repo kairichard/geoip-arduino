@@ -1,0 +1,18 @@
+ LCD Pin   Connect to
+ 1 (VSS)   GND Arduino pin*
+ 2 (VDD)   + 5v Arduino pin
+ 3 (contrast)  Resistor or potentiometer to GND Arduino pin*
+ 4 RS  Arduino pin 12
+ 5 R/W   Arduino pin 11
+ 6 Enable  Arduino pin 10
+ 7 No connection
+ 8 No connection
+ 9 No connection
+ 10 No connection
+ 11 (Data 4)   Arduino pin 5
+ 12 (Data 5)   Arduino pin 4
+ 13 (Data 6)   Arduino pin 3
+ 14 (Data 7)   Arduino pin 2
+ 15 Backlight +
+ Resistor to Arduino pin 13**
+ 16 Backlight GND  GND Arduino pin*
