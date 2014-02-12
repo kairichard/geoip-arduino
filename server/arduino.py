@@ -1,9 +1,21 @@
 import serial
-
+import glob
 
 class ArduinoDisplay(object):
     def __init__(self):
-        self.serial = serial.Serial('/dev/tty.usbmodemfa131', 9600)
+        listing = glob.glob("/dev/tty.usb*")
+        if not listing:
+            raise Exception('No USB-Device found, aborting')
+        while True:
+            print 'Select USB-Device (Arduino)'
+            print "\n".join(["%s. %s" % (i+1, v) for i, v in enumerate(listing)])
+            choice = raw_input("> ")
+            try:
+                self.serial = serial.Serial(listing[int(choice)-1], 9600)
+                break
+            except:
+                print 'Are you sure its that device?'
+                pass
 
     def clear(self):
         self.serial.write(chr(0x18))
