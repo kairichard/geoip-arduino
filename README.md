@@ -22,7 +22,7 @@ Setup:
   * cd ~/projects/geoip-arduino/server
   * run `pip install -r requirements.txt`
   * then run `python app.py`
-    * chose the correct usb device - likely to be tty.usbmodem411 (#1) 
+    * choose the correct usb device - likely to be tty.usbmodem411 (#1) 
   * you should see 'Initializing' on the display
   * install the chrome extension ( enable developermode -> load unpacked extension from ~/projects/geoip-arduino/crx)
   * you should see 'chrome connected' on the display
